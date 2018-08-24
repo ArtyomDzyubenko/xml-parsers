@@ -7,12 +7,11 @@
 		<building>19</building>
 		<flat>1</flat>
 		<firstName>Иван</firstName>
-		<lastname>Иванов</lastname>
+		<lastName>Иванов</lastName>
 		<phoneNumber>8777777777</phoneNumber>
 		<email>ivanov@mail.ru</email>
 		<account>123456</account>
 		<powerMeterNumber>1234</powerMeterNumber>
-		<powerMeterType>ONE_PHASE</powerMeterType>	
 	</AccountingPoint>
 	<AccountingPoint id="2">
 		<city>Астана</city>
@@ -20,11 +19,10 @@
 		<building>47</building>
 		<flat>2</flat>
 		<firstName>Николай</firstName>
-		<lastname>Петров</lastname>
+		<lastName>Петров</lastName>
 		<phoneNumber>85555555555</phoneNumber>
 		<email>petrov@mail.ru</email>
 		<account>123457</account>
 		<powerMeterNumber>1235</powerMeterNumber>	
-		<powerMeterType>THREE_PHASE</powerMeterType>		
 	</AccountingPoint>
 </AccountingPoints>

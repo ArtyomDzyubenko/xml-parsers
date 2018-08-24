@@ -1,7 +1,6 @@
 package parser;
 
 import entity.AccountingPoint;
-import entity.PowerMeterType;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -45,7 +44,6 @@ public class MySAXParser {
         boolean email = false;
         boolean account = false;
         boolean powerMeterNumber = false;
-        boolean powerMeterType = false;
 
         private void setCity(boolean city) {
             this.city = city;
@@ -87,10 +85,6 @@ public class MySAXParser {
             this.powerMeterNumber = powerMeterNumber;
         }
 
-        private void setPowerMeterType(boolean powerMeterType) {
-            this.powerMeterType = powerMeterType;
-        }
-
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
             if (qName.equalsIgnoreCase("AccountingPoint")) {
@@ -98,6 +92,7 @@ public class MySAXParser {
 
                 accountingPoint = new AccountingPoint();
                 accountingPoint.setId(id);
+
                 if (accountingPoints == null) {
                     accountingPoints = new ArrayList<>();
                 }
@@ -121,8 +116,6 @@ public class MySAXParser {
                 setAccount(true);
             } else if (qName.equalsIgnoreCase("powerMeterNumber")) {
                 setPowerMeterNumber(true);
-            } else if (qName.equalsIgnoreCase("powerMeterType")){
-                setPowerMeterType(true);
             }
         }
 
@@ -165,9 +158,6 @@ public class MySAXParser {
             } else if (powerMeterNumber) {
                 accountingPoint.getPowerMeter().setNumber(Integer.parseInt(new String(ch, start, length)));
                 setPowerMeterNumber(false);
-            } else if (powerMeterType) {
-                accountingPoint.getPowerMeter().setType(PowerMeterType.valueOf(new String(ch, start, length)));
-                setPowerMeterType(false);
             }
         }
     }
