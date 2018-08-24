@@ -12,21 +12,30 @@ import java.io.IOException;
 import java.util.*;
 
 public class MySAXParser {
-    ArrayList<AccountingPoint> accountingPoints = null;
+    ArrayList<AccountingPoint> accountingPoints = new ArrayList<>();
     AccountingPoint accountingPoint = null;
 
     public MySAXParser(){
 
     }
 
-    public void parse(String fileName) throws ParserConfigurationException, SAXException {
-       SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+    public boolean parse(String xsdFilename, String xmlFilename) throws ParserConfigurationException, SAXException {
+        XSDValidator xsdValidator = new XSDValidator();
+
+        if(!xsdValidator.validate(xsdFilename, xmlFilename)){
+            return false;
+        }
+
+        SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
 
         try {
-            saxParser.parse(fileName, new Handler());
+            saxParser.parse(xmlFilename, new Handler());
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return true;
     }
 
     public ArrayList<AccountingPoint> getAccountingPoints() {
@@ -93,9 +102,9 @@ public class MySAXParser {
                 accountingPoint = new AccountingPoint();
                 accountingPoint.setId(id);
 
-                if (accountingPoints == null) {
+                /*if (accountingPoints == null) {
                     accountingPoints = new ArrayList<>();
-                }
+                }*/
             } else if (qName.equalsIgnoreCase("city")) {
                 setCity(true);
             } else if (qName.equalsIgnoreCase("street")) {

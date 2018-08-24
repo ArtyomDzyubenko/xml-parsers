@@ -15,12 +15,18 @@ import java.util.ArrayList;
 public class MyStAXParser {
     ArrayList<AccountingPoint> accountingPoints = new ArrayList<>();
 
-    public void parse(String filename) {
+    public boolean parse(String xsdFilename, String xmlFilename) {
+        XSDValidator xsdValidator = new XSDValidator();
+
+        if(!xsdValidator.validate(xsdFilename, xmlFilename)){
+            return false;
+        }
+
         AccountingPoint accountingPoint = null;
         XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
 
         try {
-            XMLEventReader xmlEventReader = xmlInputFactory.createXMLEventReader(new FileInputStream(filename));
+            XMLEventReader xmlEventReader = xmlInputFactory.createXMLEventReader(new FileInputStream(xmlFilename));
 
             while (xmlEventReader.hasNext()) {
                 XMLEvent xmlEvent = xmlEventReader.nextEvent();
@@ -80,6 +86,8 @@ public class MyStAXParser {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return  true;
     }
 
     public ArrayList<AccountingPoint> getAccountingPoints() {
